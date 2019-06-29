@@ -1,5 +1,5 @@
 # This file is used by Rack-based servers to start the application.
 
-require_relative 'config/environment'
+require_relative 'hello_world'
 
-run Rails.application
+run HelloWorld.new
