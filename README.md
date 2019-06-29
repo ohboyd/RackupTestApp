@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Purpose
 
-Things you may want to cover:
+The purpose of this is just to play around with Rack and see how the middleware can be manipulated for three reasons. One is to better comprehend Rack protocol. The second is to better understand how client/server communication occurs via HTTP. And the third is to understand the sorts of calls and responses I'll be dealing with (e.g. path, headers, and body).
 
-* Ruby version
+## Method
 
-* System dependencies
+1. Create a file for a basic Ruby class that invokes the call method and checks for an environment hash containing a path like 
 
-* Configuration
+```ruby
+class HelloWorld
+  def call(env)
+    if env['PATH_INFO'] == '/hello'
+      [200, {'Content-Type' => 'text/plain'}, ['Hello World!']]
+    else
+      [404, {'Content-Type' => 'text/plain'}, ['Not Found!']]
+    end
+  end
+end
+```
 
-* Database creation
+2. Require that newly created file in the config.ru file
+* `require_relative 'hello_world.rb'`
 
-* Database initialization
+3. Use rack syntax inside the config.ru file to run the newly created Ruby class
+* `run HelloWorld.rb`
 
-* How to run the test suite
+4. Go to the application directory in terminal
+* `~/user/RackupTestApp`
 
-* Services (job queues, cache servers, search engines, etc.)
+5. Run ` $ rackup` which will open a server on port 9292
 
-* Deployment instructions
+6. Open local browser, and visit `/hello` to see the successful plain-text response from step 1
+* localhost:9292/hello
 
-* ...
+7. In the browser, try visiting any other pages to see that the error message is shown instead
+* localhost:9292/foobar
